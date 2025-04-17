@@ -77,5 +77,25 @@
     <p>Follow us on <a href="https://x.com/JOBSWAPSOL" target="_blank">X (Twitter)</a></p>
     <p>&copy; 2025 JOBSWAP. Built for the jobless.</p>
   </footer>
+
+<section style="margin-top: 4rem; text-align: center;">
+  <button class="button" onclick="stakePTO()">Stake Your PTO</button>
+  <p><span id="counter">0</span> people have already resigned.</p>
+
+  <div id="ptoModal" style="display:none; padding:1rem; background:#fff; border:2px solid #000; max-width:300px; margin:auto; margin-top:2rem;">
+    <p>We’ve logged your vacation request.<br>You’re now officially jobless.</p>
+    <button onclick="document.getElementById('ptoModal').style.display='none'">OK</button>
+  </div>
+</section>
+
+<script>
+  let counter = 0;
+  function stakePTO() {
+    counter += 1;
+    document.getElementById('counter').innerText = counter;
+    document.getElementById('ptoModal').style.display = 'block';
+  }
+</script>
+
 </body>
 </html>
