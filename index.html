@@ -66,6 +66,23 @@
       text-decoration: underline;
     }
   </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">function copyLetter() {
+  const text = document.getElementById('letterContent').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard!");
+  });
+}
+
+function downloadLetter() {
+  const letterDiv = document.getElementById('letterOutput');
+  html2canvas(letterDiv).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'resignation_letter.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
 </head>
 <body>
   <h1>JOBSWAP</h1>
@@ -97,6 +114,126 @@
     document.getElementById('counter').innerText = counter;
     document.getElementById('ptoModal').style.display = 'block';
   }
+function copyLetter() {
+  const text = document.getElementById('letterContent').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard!");
+  });
+}
+
+function downloadLetter() {
+  const letterDiv = document.getElementById('letterOutput');
+  html2canvas(letterDiv).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'resignation_letter.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+
+
+<section style="margin-top: 4rem; text-align: center;">
+  <h2>Generate Your Resignation Letter</h2>
+  <form onsubmit="generateLetter(); return false;" style="max-width: 400px; margin: auto;">
+    <input type="text" id="jobTitle" placeholder="Job Title" required style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;"><br>
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+      <input type="text" id="reason" placeholder="Reason for Leaving" required style="flex: 1; padding: 0.5rem;">
+      <button type="button" onclick="fillRandomReason()" style="padding: 0.5rem;">Make Bullshit</button>
+    </div>
+    <input type="text" id="name" placeholder="Your Name (optional)" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;"><br>
+    <button class="button" type="submit">Generate Letter</button>
+  </form>
+
+  <div id="letterOutput" style="text-align: left; border: 1px solid #000; padding: 1.5rem; max-width: 500px; margin: 2rem auto; background: #fff; display: none;">
+    <p id="letterContent" style="white-space: pre-wrap; font-family: 'Georgia', serif;"></p>    <div style="margin-top: 1rem;">      <button onclick="copyLetter()" class='button' style='margin-right: 1rem;'>Copy to Clipboard</button>      <button onclick="downloadLetter()" class='button'>Download as Image</button>    </div>
+    <p style="font-size: 0.85rem; color: #555; text-align: right;">Processed by JOBSWAP — The First DEX for Quitting</p>
+  </div>
+</section>
+
+<script>
+  function generateLetter() {
+    const title = document.getElementById('jobTitle').value;
+    const reason = document.getElementById('reason').value;
+    const name = document.getElementById('name').value || "Jobless";
+
+    const content = `
+Dear [Company],
+
+I hereby resign from my position as ${title}.
+
+Reason: ${reason}
+
+Sincerely,  
+${name}
+    `.trim();
+
+    document.getElementById('letterContent').innerText = content;
+    document.getElementById('letterOutput').style.display = 'block';
+  }
+
+  function fillRandomReason() {
+    const reasons = [
+    "I discovered $JOBSWAP",
+    "Pump.fun needs me more",
+    "My dog launched a token",
+    "PTO denied one too many times",
+    "The office fridge smell broke my spirit",
+    "Tired of pretending to work in Zoom calls",
+    "I’ve reached my final form: unemployed",
+    "Because memes pay better",
+    "I work better under no management",
+    "WAGMI, not W9",
+    "My wallet told me to.",
+    "I made a little too much on airdrops.",
+    "Gas fees are cheaper than therapy.",
+    "I’m yield farming inner peace.",
+    "The blockchain doesn’t give performance reviews.",
+    "The only stake I care about is on Solana.",
+    "My Metamask just sent me a termination notice.",
+    "Quit work. Enter liquidity.",
+    "On-chain > on-call.",
+    "My seed phrase told me to walk away.",
+    "Someone microwaved fish again.",
+    "My coworker used Comic Sans in a report.",
+    "The group chat gave me anxiety.",
+    "Too many meetings about meetings.",
+    "I spent 4 hours fixing the printer and I don’t even work IT.",
+    "Slack gave me PTSD.",
+    "HR asked me to smile more.",
+    "The coffee was decaf.",
+    "I couldn't pretend to care anymore.",
+    "My cubicle collapsed spiritually.",
+    "Freedom > paycheck.",
+    "I’m optimizing for exit liquidity.",
+    "I tried to stake PTO and got fired.",
+    "Too based to stay employed.",
+    "Bear markets build character. I’m building unemployment.",
+    "This coin is my 401(k).",
+    "Because I believe in memes over meetings.",
+    "No cap table. Just vibes.",
+    "It’s time to degen full-time.",
+    "Unemployed and up only."
+  ];
+    const random = reasons[Math.floor(Math.random() * reasons.length)];
+    document.getElementById('reason').value = random;
+  }
+function copyLetter() {
+  const text = document.getElementById('letterContent').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard!");
+  });
+}
+
+function downloadLetter() {
+  const letterDiv = document.getElementById('letterOutput');
+  html2canvas(letterDiv).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'resignation_letter.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
 </script>
 
 </body>
