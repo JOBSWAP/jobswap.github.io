@@ -92,10 +92,7 @@ function downloadLetter() {
   Trade $JOBSWAP
 </button>
 
-  <footer>
-    <p>Follow us on <a href="https://x.com/JOBSWAPSOL" target="_blank">X (Twitter)</a></p>
-    <p>&copy; 2025 JOBSWAP. Built for the jobless.</p>
-  </footer>
+  
 
 <section style="margin-top: 4rem; text-align: center;">
   <button class="button" onclick="stakePTO()">Stake Your PTO</button>
@@ -108,7 +105,11 @@ function downloadLetter() {
 </section>
 
 <script>
-  let counter = 0;
+  let possibleStarts = [68, 419, 1336];
+let counter = possibleStarts[Math.floor(Math.random() * possibleStarts.length)];
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('counter').innerText = counter;
+});
   function stakePTO() {
     counter += 1;
     document.getElementById('counter').innerText = counter;
@@ -234,6 +235,54 @@ function downloadLetter() {
     link.click();
   });
 }
+</script>
+
+
+<section style="margin-top: 6rem; text-align: center;">
+  <h2>Make It Official — Resign On-Chain</h2>
+  <p>Sign your unemployment on the Solana blockchain forever.</p>
+  <button class="button" onclick="sendResignation()">Resign On-Chain (0.000069 SOL)</button>
+</section>
+
+<footer>
+    <p>Follow us on <a href="https://x.com/JOBSWAPSOL" target="_blank">X (Twitter)</a></p>
+    <p>&copy; 2025 JOBSWAP. Built for the jobless.</p>
+  </footer>
+
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+<script>
+  async function sendResignation() {
+    try {
+      const treasuryAddress = "5QhGov8zMDGiRoX4ACuA23zrwvz7zrYWXT4Wr4iShJGS";
+      const solAmount = 0.000069;
+      const provider = window.phantom?.solana;
+      if (!provider?.isPhantom) {
+        alert("Phantom wallet not found. Please install it.");
+        return;
+      }
+      await provider.connect();
+      const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
+      const fromPubkey = new solanaWeb3.PublicKey(provider.publicKey.toString());
+      const toPubkey = new solanaWeb3.PublicKey(treasuryAddress);
+      const transaction = new solanaWeb3.Transaction().add(
+        solanaWeb3.SystemProgram.transfer({
+          fromPubkey,
+          toPubkey,
+          lamports: solAmount * solanaWeb3.LAMPORTS_PER_SOL,
+        })
+      );
+      const { blockhash } = await connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+      transaction.feePayer = fromPubkey;
+      const signed = await provider.signTransaction(transaction);
+      const signature = await connection.sendRawTransaction(signed.serialize());
+      await connection.confirmTransaction(signature);
+      alert("Resignation submitted on-chain! Tx: " + signature);
+    } catch (err) {
+      console.error("Transaction failed", err);
+      alert("Something went wrong. Are you connected to mainnet?");
+    }
+  }
 </script>
 
 </body>
